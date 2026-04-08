@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';">
+        <title>Viaje Tocaima</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            header{
+                margin: 0;
+            }
+            h2{
+                text-align: center;
+                font-family: "Comic Sans MS", cursive, sans-serif;
+                color: #ffffff;
+                margin-bottom: 50px;
+            }
+            #conteo {
+                text-align: center;
+                font-size: 40px;
+                font-family: "Comic Sans MS", cursive, sans-serif;
+                margin-top: 0px;
+                color: #ffffff;
+                font-weight: bold;
+            }
+            header p{
+                font-size: 30px;
+                font-family: "Comic Sans MS", cursive, sans-serif;
+                margin-top: 0px;
+            }
+            .imagenes {
+                display: grid;
+                grid-template-columns: repeat(6, 1fr); /* más control */
+                gap: 10px;
+                margin-left: 20px;
+
+                grid-template-areas:
+                    "img1 img1 img1 img2 img2 img2"
+                    "img3 img3 texto texto img4 img4"
+                    "img5 img5 img5 img6 img6 img6";
+            }
+
+            .imagenes img {
+                width: 90%;
+                height: 90%;
+                object-fit: fill;
+                display: block;
+            }
+
+            /* áreas */
+            .img1 {
+                grid-area: img1;
+            }
+            .img2 {
+                grid-area: img2;
+            }
+            .img3 {
+                grid-area: img3;
+            }
+            .img4 {
+                grid-area: img4;
+            }
+            .img5 {
+                grid-area: img5;
+            }
+            .img6 {
+                grid-area: img6;
+            }
+
+            .texto {
+                grid-area: texto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .banner {
+                position: relative;
+                height: 200px;
+                display: flex;
+                align-items: center;
+                padding-left: 20px;
+
+                /* fondo azul rey → azul cielo */
+                background: linear-gradient(135deg, #0033cc, #66ccff);
+            }
+
+            /* texto con gradiente */
+            .banner h1 {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 60px;
+                font-weight: bold;
+                margin: 20px;
+                background: linear-gradient(90deg, #ffffff, #e0e0e0);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .banner .audio{
+                z-index: 2;
+            }
+            section{
+                margin: 0;
+                background-image: url(contenidos/img/fondo_fuegos_artificiales.jpg)
+            }
+
+            /*RESPONSIVE MOBILE*/
+            @media (max-width: 768px) {
+
+                section {
+                    background-image: url(contenidos/img/fondo_fuegos_artificiales.jpg);
+                    background-size: cover;       /* cubre toda la pantalla */
+                    background-position: center;  /* centrado */
+                    background-repeat: no-repeat; /* no repetir */
+                }
+
+                .imagenes {
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-areas:
+                        "img1 img2"
+                        "img3 img4"
+                        "texto texto"
+                        "img5 img6";
+
+                    margin-left: 0;
+                    gap: 10px;
+                    padding: 10px;
+                }
+
+                .imagenes img {
+                    width: 100%;
+                    height: auto;
+                }
+
+                .texto {
+                    text-align: center;
+                    font-size: 18px;
+                    padding: 10px 0;
+                }
+
+                /* Ajustes visuales opcionales */
+                .banner {
+                    display: block; /* deja de usar flex */
+                    text-align: center;
+                    height: auto;
+                    padding: 10px;
+                }
+
+                .banner h1 {
+                    position: relative; /* quitamos absolute */
+                    left: auto;
+                    transform: none;
+                    font-size: 35px;
+                    margin: 10px 0;
+                }
+
+                #conteo {
+                    font-size: 20px;
+                }
+                .audio {
+                    display: block;
+                    margin: 0 auto 10px auto; /* centrado arriba */
+                    width: 150px;
+                }
+            }
+
+        </style>
+        <script>
+
+            // Set the date we're counting down to
+            var countDownDate = new Date("2026-04-10 18:00:00").getTime();
+            const count_down_date_format = new Intl.DateTimeFormat("es-CO", {
+                timeZone: "America/Bogota",
+                dateStyle: "full",
+                timeStyle: "short"
+            }).format(countDownDate);
+            console.log(count_down_date_format);
+
+            // Update the count down every 1 second
+            var x = setInterval(function () {
+
+                // Get today's date and time
+                var now = new Date().getTime();
+                const now_date_format = new Intl.DateTimeFormat("es-CO", {
+                    timeZone: "America/Bogota",
+                    dateStyle: "full",
+                    timeStyle: "short"
+                }).format(now);
+                console.log(now_date_format);
+
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Output the result in an element with id="demo"
+                document.getElementById("conteo").innerHTML = days + " Dias " + hours + " Horas "
+                        + minutes + " Minutos " + seconds + " Segundos ";
+
+                // If the count down is over, write some text 
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("conteo").innerHTML = "EXPIRED";
+                }
+            }, 1000);
+
+        </script>
+    </head>
+    <body>
+        <header>
+            <div class="banner">
+                <audio id="audio" class="audio" controls autoplay muted>
+                    <source src="contenidos/mp3/Farruko_Pepas.mp3" type="audio/mpeg">
+                </audio>
+                <h1>PANCHOS</h1>
+            </div>
+        </header>
+        <section>
+            <h2>CUENTA REGRESIVA PARA EL VIAJE A TOCAIMA DE LOS PANCHOS</h2>
+            <div id="imagenes" class="imagenes">
+                <img src="contenidos/img/imagen_tocaima.jpg" alt="imagen_tocaima" width="680" height="480" class="img1"/>
+                <img src="contenidos/img/mapa_ruta_tocaima.jpg" alt="mapa_ruta_tocaima" width="680" height="480" class="img2"/>
+                <img src="contenidos/img/touge.gif" alt="touge" width="680" height="480" class="img3"/>
+                <p id="conteo" class="texto"></p>
+                <img src="contenidos/img/touge 2.gif" alt="touge2" width="680" height="480" class="img4"/>
+                <img src="contenidos/img/panchos_1.jpeg" alt="panchos_1" width="680" height="480" class="img5"/>
+                <img src="contenidos/img/panchos_2.jpeg" alt="panchos_2" width="680" height="480" class="img6"/>
+
+            </div>
+        </section>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const audio = document.getElementById("audio");
+
+                function activarAudio() {
+                    audio.muted = false;
+                    audio.play().catch(e => console.log(e));
+
+                    window.removeEventListener("scroll", activarAudio);
+                    window.removeEventListener("touchstart", activarAudio);
+                    window.removeEventListener("click", activarAudio);
+                }
+
+                window.addEventListener("scroll", activarAudio);
+                window.addEventListener("touchstart", activarAudio);
+                window.addEventListener("click", activarAudio);
+            });
+        </script>
+    </body>
+</html>
